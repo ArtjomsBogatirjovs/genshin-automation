@@ -24,7 +24,6 @@ class MoveAction(Action):
     def type_name() -> str:
         return ActionType.MOVE
 
-
     def run(self, ctx: RunContext) -> None:
         key = DIRECTION_TO_KEY.get(self.direction, "w")
         key_down(key)

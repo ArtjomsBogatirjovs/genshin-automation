@@ -153,4 +153,4 @@ class RoutesRunTab(ttk.Frame):
         messagebox.showinfo(
             "Done",
             "Routes executed:\n" + "\n".join(names),
-            )
+        )

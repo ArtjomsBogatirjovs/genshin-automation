@@ -9,6 +9,7 @@ _GI_KEYWORDS = ["Genshin Impact"]
 def _matches_genshin(title: str) -> bool:
     return any(k in title for k in _GI_KEYWORDS)
 
+
 class GameWindow:
     def __init__(self, title: str | None = None):
         self.title = title or ""

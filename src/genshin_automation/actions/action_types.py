@@ -4,4 +4,3 @@ class ActionType:
     MOVE = "Move"
     MOVE_CAMERA = "Move camera"
     TELEPORT_MONDSTADT_WINDWAIL = "Teleport Mondstadt Windwail statue"
-

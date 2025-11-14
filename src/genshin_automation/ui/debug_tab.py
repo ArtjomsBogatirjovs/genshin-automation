@@ -1,83 +1,129 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-from genshin_automation.core.input_controller import click
+from genshin_automation.core import input_controller as ic
 from genshin_automation.core.window import GameWindow
 
 
 class DebugTab(ttk.Frame):
     """
-    Debug tab: choose game window, enter normalized coordinates (0..1),
-    send a click to the game and show a marker square at click position.
+    Debug tab for testing clicks and mouse movement.
     """
 
     def __init__(self, master: tk.Misc):
         super().__init__(master)
 
         self.window_title_var = tk.StringVar()
+
+        # click test
         self.x_frac_var = tk.StringVar(value="0.5")
         self.y_frac_var = tk.StringVar(value="0.5")
 
-        # top: window selection
-        top = ttk.LabelFrame(self, text="Game window")
-        top.grid(row=0, column=0, columnspan=2, sticky="ew", padx=5, pady=5)
+        # mouse move test (relative)
+        self.delta_x_var = tk.StringVar(value="200")
+        self.delta_y_var = tk.StringVar(value="0")
+        self.delta_duration_var = tk.StringVar(value="0.2")
 
-        ttk.Label(top, text="Genshin / GI window:").grid(
-            row=0, column=0, sticky="w", padx=5, pady=(5, 2)
-        )
+        # camera look test
+        self.camera_pixels_var = tk.StringVar(value="300")
+        self.camera_duration_var = tk.StringVar(value="0.2")
+
+        # layout
+        self._build_ui()
+        self.refresh_windows()
+
+    # -------------------------------------------------------------
+    # UI BUILD
+    # -------------------------------------------------------------
+    def _build_ui(self):
+        self.columnconfigure(0, weight=1)
+
+        # ---------------------------------------------------------
+        # Window selector
+        # ---------------------------------------------------------
+        frame_window = ttk.LabelFrame(self, text="Game window")
+        frame_window.grid(row=0, column=0, sticky="ew", padx=8, pady=8)
+
+        ttk.Label(frame_window, text="Genshin window:").grid(row=0, column=0, padx=5, pady=5, sticky="w")
+
         self.window_combo = ttk.Combobox(
-            top,
+            frame_window,
             textvariable=self.window_title_var,
             state="readonly",
             width=40,
         )
-        self.window_combo.grid(
-            row=0, column=1, sticky="ew", padx=5, pady=(5, 2)
-        )
-        btn_refresh = ttk.Button(
-            top, text="Refresh", command=self.refresh_windows
-        )
-        btn_refresh.grid(
-            row=0, column=2, sticky="w", padx=5, pady=(5, 2)
-        )
+        self.window_combo.grid(row=0, column=1, sticky="ew", padx=5, pady=5)
+        frame_window.columnconfigure(1, weight=1)
 
-        top.columnconfigure(1, weight=1)
+        ttk.Button(
+            frame_window,
+            text="Refresh",
+            command=self.refresh_windows
+        ).grid(row=0, column=2, padx=5)
 
-        # middle: coordinates
-        mid = ttk.LabelFrame(self, text="Click position (normalized)")
-        mid.grid(row=1, column=0, columnspan=2, sticky="ew", padx=5, pady=5)
+        # ---------------------------------------------------------
+        # Click test
+        # ---------------------------------------------------------
+        frame_click = ttk.LabelFrame(self, text="Click tester")
+        frame_click.grid(row=1, column=0, sticky="ew", padx=8, pady=8)
 
-        ttk.Label(mid, text="X (0..1):").grid(
-            row=0, column=0, sticky="w", padx=5, pady=2
-        )
-        ttk.Entry(mid, textvariable=self.x_frac_var, width=10).grid(
-            row=0, column=1, sticky="w", padx=5, pady=2
-        )
+        ttk.Label(frame_click, text="X (0..1):").grid(row=0, column=0, padx=5, pady=2, sticky="w")
+        ttk.Entry(frame_click, textvariable=self.x_frac_var, width=10).grid(row=0, column=1, padx=5, pady=2, sticky="w")
 
-        ttk.Label(mid, text="Y (0..1):").grid(
-            row=1, column=0, sticky="w", padx=5, pady=2
-        )
-        ttk.Entry(mid, textvariable=self.y_frac_var, width=10).grid(
-            row=1, column=1, sticky="w", padx=5, pady=2
-        )
+        ttk.Label(frame_click, text="Y (0..1):").grid(row=1, column=0, padx=5, pady=2, sticky="w")
+        ttk.Entry(frame_click, textvariable=self.y_frac_var, width=10).grid(row=1, column=1, padx=5, pady=2, sticky="w")
 
-        self.pixel_label = ttk.Label(mid, text="Screen coords: -,-")
-        self.pixel_label.grid(
-            row=2, column=0, columnspan=3, sticky="w", padx=5, pady=(4, 2)
-        )
+        ttk.Button(
+            frame_click,
+            text="Click",
+            command=self._debug_click
+        ).grid(row=2, column=0, columnspan=3, sticky="ew", padx=5, pady=5)
 
-        btn_click = ttk.Button(
-            mid, text="Click in game and show marker", command=self.click_and_mark
-        )
-        btn_click.grid(
-            row=3, column=0, columnspan=3, sticky="ew", padx=5, pady=(5, 5)
-        )
+        self.pixel_label = ttk.Label(frame_click, text="Screen coords: - , -")
+        self.pixel_label.grid(row=3, column=0, columnspan=3, sticky="w", padx=5)
 
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=1)
+        # ---------------------------------------------------------
+        # Relative mouse movement
+        # ---------------------------------------------------------
+        frame_move = ttk.LabelFrame(self, text="Mouse movement (relative)")
+        frame_move.grid(row=2, column=0, sticky="ew", padx=8, pady=8)
 
-        self.refresh_windows()
+        ttk.Label(frame_move, text="Delta X:").grid(row=0, column=0, padx=5, pady=2, sticky="w")
+        ttk.Entry(frame_move, textvariable=self.delta_x_var, width=10).grid(row=0, column=1, padx=5, pady=2)
 
+        ttk.Label(frame_move, text="Delta Y:").grid(row=1, column=0, padx=5, pady=2, sticky="w")
+        ttk.Entry(frame_move, textvariable=self.delta_y_var, width=10).grid(row=1, column=1, padx=5, pady=2)
+
+        ttk.Label(frame_move, text="Duration (s):").grid(row=2, column=0, padx=5, pady=2, sticky="w")
+        ttk.Entry(frame_move, textvariable=self.delta_duration_var, width=10).grid(row=2, column=1, padx=5, pady=2)
+
+        ttk.Button(
+            frame_move,
+            text="Move mouse",
+            command=self._debug_move_mouse
+        ).grid(row=3, column=0, columnspan=3, sticky="ew", padx=5, pady=5)
+
+        # ---------------------------------------------------------
+        # Camera movement using relative mouse movement
+        # ---------------------------------------------------------
+        frame_camera = ttk.LabelFrame(self, text="Camera rotation")
+        frame_camera.grid(row=3, column=0, sticky="ew", padx=8, pady=8)
+
+        ttk.Label(frame_camera, text="Pixels:").grid(row=0, column=0, padx=5, pady=2, sticky="w")
+        ttk.Entry(frame_camera, textvariable=self.camera_pixels_var, width=10).grid(row=0, column=1, padx=5, pady=2)
+
+        ttk.Label(frame_camera, text="Duration (s):").grid(row=1, column=0, padx=5, pady=2, sticky="w")
+        ttk.Entry(frame_camera, textvariable=self.camera_duration_var, width=10).grid(row=1, column=1, padx=5, pady=2)
+
+        btn_left = ttk.Button(frame_camera, text="Rotate Left", command=self._debug_camera_left)
+        btn_right = ttk.Button(frame_camera, text="Rotate Right", command=self._debug_camera_right)
+
+        btn_left.grid(row=2, column=0, sticky="ew", padx=5, pady=5)
+        btn_right.grid(row=2, column=1, sticky="ew", padx=5, pady=5)
+
+    # -------------------------------------------------------------
+    # WINDOW LIST
+    # -------------------------------------------------------------
     def refresh_windows(self):
         titles = GameWindow.list_candidate_titles()
         self.window_combo["values"] = titles
@@ -88,60 +134,69 @@ class DebugTab(ttk.Frame):
         else:
             self.window_title_var.set("")
 
-    def click_and_mark(self):
+    # -------------------------------------------------------------
+    # CLICK TEST
+    # -------------------------------------------------------------
+    def _debug_click(self):
         title = self.window_title_var.get().strip()
         if not title:
-            messagebox.showwarning(
-                "Game window", "Select a Genshin / GI window first."
-            )
+            messagebox.showwarning("Game window", "Select a game window.")
             return
 
-        try:
-            x_frac = float(self.x_frac_var.get())
-            y_frac = float(self.y_frac_var.get())
-        except ValueError:
-            messagebox.showwarning(
-                "Invalid values", "X and Y must be float numbers."
-            )
-            return
-
-        if not (0.0 <= x_frac <= 1.0 and 0.0 <= y_frac <= 1.0):
-            messagebox.showwarning(
-                "Range error", "X and Y must be in range 0..1."
-            )
-            return
+        x_frac = float(self.x_frac_var.get())
+        y_frac = float(self.y_frac_var.get())
 
         gw = GameWindow(title=title)
         gw.find_and_focus()
-        left, top, width, height = gw.get_rect()
+        left, top, w, h = gw.get_rect()
 
-        x = int(left + x_frac * width)
-        y = int(top + y_frac * height)
+        x = int(left + x_frac * w)
+        y = int(top + y_frac * h)
 
         self.pixel_label.config(text=f"Screen coords: {x}, {y}")
 
-        click(x, y)
-
+        ic.click(x, y)
         self._show_marker(x, y)
 
+    # -------------------------------------------------------------
+    # RELATIVE MOUSE MOVEMENT
+    # -------------------------------------------------------------
+    def _debug_move_mouse(self):
+        dx = int(self.delta_x_var.get())
+        dy = int(self.delta_y_var.get())
+        duration = float(self.delta_duration_var.get())
+
+        ic.move_mouse_relative_smooth(dx, dy, duration=duration)
+
+    # -------------------------------------------------------------
+    # CAMERA MOVEMENT
+    # -------------------------------------------------------------
+    def _debug_camera_left(self):
+        px = int(self.camera_pixels_var.get())
+        duration = float(self.camera_duration_var.get())
+        ic.mouse_look_left(pixels=px, duration=duration)
+
+    def _debug_camera_right(self):
+        px = int(self.camera_pixels_var.get())
+        duration = float(self.camera_duration_var.get())
+        ic.mouse_look_right(pixels=px, duration=duration)
+
+    # -------------------------------------------------------------
+    # MARKER
+    # -------------------------------------------------------------
     def _show_marker(self, x: int, y: int):
         size = 20
         top = tk.Toplevel(self)
         top.overrideredirect(True)
+        top.geometry(f"{size}x{size}+{x - size // 2}+{y - size // 2}")
         try:
             top.attributes("-topmost", True)
             top.attributes("-alpha", 0.6)
         except tk.TclError:
             pass
 
-        # position centered at (x, y)
-        top.geometry(f"{size}x{size}+{x - size//2}+{y - size//2}")
-
         canvas = tk.Canvas(top, highlightthickness=0)
         canvas.pack(fill="both", expand=True)
-        canvas.create_rectangle(
-            0, 0, size, size, outline="red", width=2
-        )
+        canvas.create_rectangle(0, 0, size, size, outline="red", width=2)
 
-        # destroy after 500 ms
-        top.after(500, top.destroy)
+        top.after(400, top.destroy)

@@ -4,12 +4,11 @@ from tkinter import ttk, messagebox
 from genshin_automation.actions.action_types import ActionType
 from genshin_automation.actions.click_point import ClickPointAction
 from genshin_automation.actions.move import MoveAction
+from genshin_automation.actions.move_camera import MoveCameraAction
 from genshin_automation.actions.press_key import PressKeyAction
 from genshin_automation.actions.teleport_monstadt import TeleportMondstadtWindwailAction
 from genshin_automation.core.paths import ROUTES_DIR
 from genshin_automation.core.route import Route, save_route, load_route
-from genshin_automation.actions.action_types import ActionType
-from genshin_automation.actions.move_camera import MoveCameraAction
 
 ACTION_UI_DEFS = {
     ActionType.CLICK: {
@@ -55,19 +54,13 @@ ACTION_UI_DEFS = {
                 "label": "Direction",
                 "type": "choice",
                 "choices": ["left", "right"],
-                "default": "left",
+                "default": "right",
             },
             {
-                "name": "pixels",
-                "label": "Pixels",
+                "name": "iterations",
+                "label": "Iterations",
                 "type": "int",
-                "default": "200",
-            },
-            {
-                "name": "duration_s",
-                "label": "Duration (s)",
-                "type": "float",
-                "default": "0.15",
+                "default": "1",
             },
         ],
     },
@@ -77,6 +70,7 @@ ACTION_UI_DEFS = {
         "fields": [],
     },
 }
+
 
 class RouteEditorTab(ttk.Frame):
     def __init__(self, master: tk.Misc):
@@ -107,6 +101,7 @@ class RouteEditorTab(ttk.Frame):
         self.actions_list.grid(
             row=2, column=0, rowspan=3, sticky="nsew", padx=5, pady=5
         )
+        self.actions_list.bind("<<ListboxSelect>>", self._on_action_selected)
 
         # right: existing routes selector
         right_top = ttk.Frame(self)
@@ -130,12 +125,12 @@ class RouteEditorTab(ttk.Frame):
         right_top.columnconfigure(1, weight=1)
 
         # right: dynamic action editor
-        self.editor_frame = ttk.LabelFrame(self, text="New action")
+        self.editor_frame = ttk.LabelFrame(self, text="Action editor")
         self.editor_frame.grid(
             row=2, column=1, rowspan=2, sticky="nsew", padx=5, pady=5
         )
 
-        # bottom: operations
+        # bottom operations
         bottom = ttk.Frame(self)
         bottom.grid(row=5, column=0, columnspan=2, sticky="ew", padx=5, pady=(0, 5))
 
@@ -168,12 +163,11 @@ class RouteEditorTab(ttk.Frame):
 
         # initial state
         if ACTION_UI_DEFS:
-            # first key as default
             self.action_type_var.set(next(iter(ACTION_UI_DEFS.keys())))
         self._build_action_editor()
         self.refresh_available_routes()
 
-    # -------- routes list (existing route files) --------
+    # ----------------- routes (file level) -----------------
 
     def refresh_available_routes(self) -> None:
         ROUTES_DIR.mkdir(parents=True, exist_ok=True)
@@ -221,7 +215,7 @@ class RouteEditorTab(ttk.Frame):
 
         self._rebuild_actions_list()
 
-    # -------- dynamic action editor --------
+    # ----------------- editor UI -----------------
 
     def _build_action_editor(self) -> None:
         for child in self.editor_frame.winfo_children():
@@ -236,10 +230,10 @@ class RouteEditorTab(ttk.Frame):
             textvariable=self.action_type_var,
             state="readonly",
             values=list(ACTION_UI_DEFS.keys()),
-            width=20,
+            width=100,
         )
         type_combo.grid(row=0, column=1, sticky="w", padx=5, pady=(5, 0))
-        type_combo.bind("<<ComboboxSelected>>", lambda e: self._build_action_editor())
+        type_combo.bind("<<ComboboxSelected>>", lambda e: self._on_action_type_changed())
 
         ui_def = ACTION_UI_DEFS[self.action_type_var.get()]
         ttk.Label(self.editor_frame, text=ui_def["label"]).grid(
@@ -280,10 +274,21 @@ class RouteEditorTab(ttk.Frame):
             self.editor_frame, text="Add action", command=self.add_action
         )
         btn_add.grid(
-            row=row, column=0, columnspan=2, sticky="ew", padx=5, pady=(5, 5)
+            row=row, column=0, columnspan=2, sticky="ew", padx=5, pady=(5, 2)
         )
 
-    # -------- actions list operations (in-memory route) --------
+        btn_update = ttk.Button(
+            self.editor_frame, text="Update selected", command=self.update_selected
+        )
+        btn_update.grid(
+            row=row + 1, column=0, columnspan=2, sticky="ew", padx=5, pady=(2, 5)
+        )
+
+    def _on_action_type_changed(self) -> None:
+        # rebuild editor with defaults for new type
+        self._build_action_editor()
+
+    # ----------------- actions list operations -----------------
 
     def _rebuild_actions_list(self) -> None:
         self.actions_list.delete(0, tk.END)
@@ -298,7 +303,7 @@ class RouteEditorTab(ttk.Frame):
                 tk.END, f"{idx}. {action['type']}: {summary}"
             )
 
-    def add_action(self) -> None:
+    def _collect_editor_values(self) -> dict | None:
         type_name = self.action_type_var.get()
         ui_def = ACTION_UI_DEFS[type_name]
 
@@ -314,14 +319,14 @@ class RouteEditorTab(ttk.Frame):
                     value = float(raw)
                 elif f_type == "int":
                     value = int(raw)
-                else:
+                else:  # "str" or "choice"
                     value = str(raw)
             except ValueError:
                 messagebox.showwarning(
                     "Invalid value",
                     f"Field '{name}' must be {f_type}.",
                 )
-                return
+                return None
 
             if name in ("x_frac", "y_frac") and f_type == "float":
                 if not (0.0 <= value <= 1.0):
@@ -329,11 +334,17 @@ class RouteEditorTab(ttk.Frame):
                         "Range error",
                         f"{name} must be in range 0..1.",
                     )
-                    return
+                    return None
 
             values[name] = value
 
-        # insert after selected element, or at the end if nothing selected
+        return values
+
+    def add_action(self) -> None:
+        values = self._collect_editor_values()
+        if values is None:
+            return
+
         sel = self.actions_list.curselection()
         if sel:
             insert_index = sel[0] + 1
@@ -346,6 +357,23 @@ class RouteEditorTab(ttk.Frame):
         self.actions_list.selection_clear(0, tk.END)
         self.actions_list.selection_set(insert_index)
         self.actions_list.see(insert_index)
+
+    def update_selected(self) -> None:
+        sel = self.actions_list.curselection()
+        if not sel:
+            messagebox.showwarning("Update", "Select an action to update.")
+            return
+
+        index = sel[0]
+        values = self._collect_editor_values()
+        if values is None:
+            return
+
+        self._current_actions[index] = values
+        self._rebuild_actions_list()
+        self.actions_list.selection_clear(0, tk.END)
+        self.actions_list.selection_set(index)
+        self.actions_list.see(index)
 
     def remove_selected(self) -> None:
         sel = self.actions_list.curselection()
@@ -392,7 +420,33 @@ class RouteEditorTab(ttk.Frame):
         self.actions_list.selection_set(index + 1)
         self.actions_list.see(index + 1)
 
-    # -------- persistence --------
+    # ----------------- selection → editor sync -----------------
+
+    def _on_action_selected(self, _event) -> None:
+        sel = self.actions_list.curselection()
+        if not sel:
+            return
+        index = sel[0]
+        if index >= len(self._current_actions):
+            return
+
+        action = self._current_actions[index]
+        type_name = action["type"]
+
+        if type_name not in ACTION_UI_DEFS:
+            return
+
+        # set type, rebuild editor for this type, then populate fields
+        self.action_type_var.set(type_name)
+        self._build_action_editor()
+
+        ui_def = ACTION_UI_DEFS[type_name]
+        for field_def in ui_def["fields"]:
+            name = field_def["name"]
+            if name in action and name in self._field_vars:
+                self._field_vars[name].set(str(action[name]))
+
+    # ----------------- save -----------------
 
     def save_route_json(self) -> None:
         if not self._current_actions:

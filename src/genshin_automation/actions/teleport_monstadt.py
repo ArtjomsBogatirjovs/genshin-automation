@@ -15,7 +15,6 @@ class TeleportMondstadtWindwailAction(Action):
     def type_name() -> str:
         return ActionType.TELEPORT_MONDSTADT_WINDWAIL
 
-
     def run(self, ctx: RunContext) -> None:
         key_press("m")
         sleep(1)

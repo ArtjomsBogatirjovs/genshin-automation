@@ -1,0 +1,55 @@
+{
+  "name": "Windwheel Aster",
+  "actions": [
+    {
+      "type": "Teleport Mondstadt Windwail statue"
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 4.0
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 0.5
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 0.5
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 0.5
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Move camera",
+      "direction": "right",
+      "iterations": 7
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 5.5
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 0.5
+    }
+  ]
+}

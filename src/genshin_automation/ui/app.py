@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 
-from genshin_automation.ui.routes_tab import RoutesRunTab
-from genshin_automation.ui.editor_tab import RouteEditorTab
 from genshin_automation.ui.debug_tab import DebugTab
+from genshin_automation.ui.editor_tab import RouteEditorTab
+from genshin_automation.ui.routes_tab import RoutesRunTab
 
 
 def run_app():
