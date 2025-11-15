@@ -1,0 +1,99 @@
+{
+  "name": "Expedition_repeat_liyue",
+  "actions": [
+    {
+      "type": "Teleport Liyue Harbor teleport"
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 0.3
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 7.5
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 0.7
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 3.5
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 0.2
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 1.0
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 0.2
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 1.6
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Wait",
+      "duration_s": 0.5
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Wait",
+      "duration_s": 0.5
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Wait",
+      "duration_s": 1.0
+    },
+    {
+      "type": "Click",
+      "x_frac": 0.68,
+      "y_frac": 0.525
+    },
+    {
+      "type": "Wait",
+      "duration_s": 1.0
+    },
+    {
+      "type": "Click",
+      "x_frac": 0.09,
+      "y_frac": 0.95
+    },
+    {
+      "type": "Wait",
+      "duration_s": 1.0
+    },
+    {
+      "type": "Click",
+      "x_frac": 0.55,
+      "y_frac": 0.95
+    },
+    {
+      "type": "Press",
+      "key": "esc"
+    }
+  ]
+}

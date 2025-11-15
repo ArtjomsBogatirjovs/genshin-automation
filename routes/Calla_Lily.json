@@ -7,7 +7,58 @@
     {
       "type": "Move camera",
       "direction": "left",
-      "iterations": 5
+      "iterations": 4
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 6.2
+    },
+    {
+      "type": "Move camera",
+      "direction": "right",
+      "iterations": 2
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 3.0
+    },
+    {
+      "type": "Move camera",
+      "direction": "left",
+      "iterations": 4
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 9.0
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 1.5
+    },
+    {
+      "type": "Move",
+      "direction": "backward",
+      "duration_s": 0.5
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Press",
+      "key": "f"
     }
   ]
 }

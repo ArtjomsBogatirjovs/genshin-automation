@@ -32,3 +32,17 @@ class Action(ABC):
     @abstractmethod
     def from_dict(data: Dict[str, Any]) -> "Action":
         ...
+
+class BaseTeleportAction(Action, ABC):
+
+    @staticmethod
+    @abstractmethod
+    def type_name() -> str:
+        ...
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {"type": self.type_name()}
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "BaseTeleportAction":
+        return cls()

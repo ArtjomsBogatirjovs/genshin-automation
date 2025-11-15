@@ -7,14 +7,19 @@ from genshin_automation.core.paths import ROUTES_DIR
 from genshin_automation.core.route import load_route
 from genshin_automation.core.window import GameWindow
 
+map_adjusted = False
 
 def setup_map():
+    global map_adjusted
+    if map_adjusted:
+        return
     open_map()
     for _ in range(61):
         scroll_down()
     for _ in range(19):
         scroll_up()
     open_map()
+    map_adjusted = True
 
 class RoutesRunTab(ttk.Frame):
     def __init__(self, master: tk.Misc):

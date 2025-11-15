@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 from genshin_automation.actions import MoveCameraAction
+from genshin_automation.core import input_controller as ic
 from genshin_automation.core.context import RunContext
 from genshin_automation.core.window import GameWindow
-from genshin_automation.core import input_controller as ic
 
 
 class DebugTab(ttk.Frame):
@@ -150,14 +150,11 @@ class DebugTab(ttk.Frame):
 
         gw = GameWindow(title=title)
         gw.find_and_focus()
-        left, top, w, h = gw.get_rect()
 
-        x = int(left + x_frac * w)
-        y = int(top + y_frac * h)
-
+        ic.move_mouse_to(gw.get_rect(), x_frac, y_frac)
+        x, y = ic.get_x_y(gw.get_rect(), x_frac, y_frac)
         self.pixel_label.config(text=f"Screen coords: {x}, {y}")
 
-        ic.click(x, y)
         self._show_marker(x, y)
 
     # -------------------------------------------------------------
