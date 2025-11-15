@@ -92,6 +92,11 @@ class RouteEditorTab(ttk.Frame):
         ttk.Entry(top, textvariable=self.route_name_var, width=30).pack(
             side=tk.LEFT, padx=2, pady=5
         )
+        ttk.Button(
+            top,
+            text="New route",
+            command=self.new_route,
+        ).pack(side=tk.LEFT, padx=5)
         top.grid(row=0, column=0, columnspan=2, sticky="ew")
 
         # left: actions list
@@ -144,7 +149,7 @@ class RouteEditorTab(ttk.Frame):
             bottom, text="Move down", command=self.move_down
         )
         btn_save = ttk.Button(
-            bottom, text="Save route to JSON", command=self.save_route_json
+            bottom, text="Save route", command=self.save_route_json
         )
 
         btn_remove.grid(row=0, column=0, sticky="ew", padx=(0, 5))
@@ -285,7 +290,6 @@ class RouteEditorTab(ttk.Frame):
         )
 
     def _on_action_type_changed(self) -> None:
-        # rebuild editor with defaults for new type
         self._build_action_editor()
 
     # ----------------- actions list operations -----------------
@@ -319,7 +323,7 @@ class RouteEditorTab(ttk.Frame):
                     value = float(raw)
                 elif f_type == "int":
                     value = int(raw)
-                else:  # "str" or "choice"
+                else:
                     value = str(raw)
             except ValueError:
                 messagebox.showwarning(
@@ -480,3 +484,18 @@ class RouteEditorTab(ttk.Frame):
 
         messagebox.showinfo("Saved", f"Route saved to:\n{path}")
         self.refresh_available_routes()
+
+    def new_route(self) -> None:
+        """
+        Clear current route state and start a new route.
+        """
+        self.route_name_var.set("New route")
+
+        self._current_actions.clear()
+        self.actions_list.delete(0, tk.END)
+        self.actions_list.selection_clear(0, tk.END)
+
+        # reset editor to defaults for current action type
+        if ACTION_UI_DEFS and not self.action_type_var.get():
+            self.action_type_var.set(next(iter(ACTION_UI_DEFS.keys())))
+        self._build_action_editor()

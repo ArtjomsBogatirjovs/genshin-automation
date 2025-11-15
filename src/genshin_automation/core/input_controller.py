@@ -34,19 +34,6 @@ def click_percent(rect: Tuple[int, int, int, int], x_frac: float, y_frac: float)
 def click_to_teleport_button(rect: Tuple[int, int, int, int]) -> None:
     click_percent(rect, 0.88, 0.93)
 
-def move_mouse_relative_smooth(
-        delta_x: int,
-        delta_y: int = 0,
-        steps: int = 10,
-) -> None:
-    steps = max(1, steps)
-
-    step_dx = delta_x / steps
-    step_dy = delta_y / steps
-
-    for _ in range(steps):
-        pydirectinput.moveRel(int(step_dx), int(step_dy))
-
 
 def move_camera_horizontal(
         rect: Tuple[int, int, int, int],
@@ -67,6 +54,10 @@ def move_camera_horizontal(
 
     pydirectinput.mouseDown()
     try:
-        move_mouse_relative_smooth(delta_x=delta_x, delta_y=0)
+        steps = 10
+        step_dx = delta_x / steps
+
+        for _ in range(steps):
+            pydirectinput.moveRel(int(step_dx), 0)
     finally:
         pydirectinput.mouseUp()

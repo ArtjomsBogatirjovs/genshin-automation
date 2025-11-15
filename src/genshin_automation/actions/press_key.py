@@ -3,6 +3,7 @@ from typing import Dict, Any
 
 from genshin_automation.actions.action_types import ActionType
 from genshin_automation.actions.base import Action, register_action
+from genshin_automation.config import WITHOUT_F_PRESSING
 from genshin_automation.core.context import RunContext
 from genshin_automation.core.input_controller import key_press
 
@@ -17,6 +18,8 @@ class PressKeyAction(Action):
         return ActionType.PRESS
 
     def run(self, ctx: RunContext) -> None:
+        if WITHOUT_F_PRESSING and self.key == "f":
+            return
         key_press(self.key)
 
     def to_dict(self) -> Dict[str, Any]:

@@ -3,6 +3,7 @@ from typing import Dict, Any
 
 from genshin_automation.actions.action_types import ActionType
 from genshin_automation.actions.base import Action, register_action
+from genshin_automation.config import AFTER_TELEPORT_PAUSE
 from genshin_automation.core.context import RunContext
 from genshin_automation.core.input_controller import key_press, sleep, click_percent, click_to_teleport_button
 
@@ -29,7 +30,7 @@ class TeleportMondstadtWindwailAction(Action):
         sleep(1)
 
         click_to_teleport_button(ctx.window_rect)
-        sleep(1)
+        sleep(AFTER_TELEPORT_PAUSE)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
