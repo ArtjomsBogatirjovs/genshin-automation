@@ -33,7 +33,7 @@ class MoveCameraAction(Action):
             ic.move_camera_horizontal(
                 rect=ctx.window_rect,
                 start_x_frac=start_x_frac,
-                start_y_frac=0.5,
+                start_y_frac=0.65,
                 right=self.direction == "right",
             )
             ic.sleep(0.05)

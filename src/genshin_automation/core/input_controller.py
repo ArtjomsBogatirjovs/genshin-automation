@@ -1,6 +1,7 @@
 import time
 from typing import Tuple
 
+import pyautogui
 import pydirectinput
 
 
@@ -31,8 +32,25 @@ def click_percent(rect: Tuple[int, int, int, int], x_frac: float, y_frac: float)
     click(x, y)
 
 
+def scroll_down() -> None:
+    scroll(-1)
+
+
+def scroll_up() -> None:
+    scroll(1)
+
+
+def scroll(clicks: int) -> None:
+    pyautogui.scroll(clicks)
+
+
 def click_to_teleport_button(rect: Tuple[int, int, int, int]) -> None:
     click_percent(rect, 0.88, 0.93)
+
+
+def open_map() -> None:
+    key_press("m")
+    sleep(1.0)
 
 
 def move_camera_horizontal(

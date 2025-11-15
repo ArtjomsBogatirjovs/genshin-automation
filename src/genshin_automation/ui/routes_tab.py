@@ -2,10 +2,19 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 from genshin_automation.core.context import RunContext
+from genshin_automation.core.input_controller import open_map, scroll_up, scroll_down
 from genshin_automation.core.paths import ROUTES_DIR
 from genshin_automation.core.route import load_route
 from genshin_automation.core.window import GameWindow
 
+
+def setup_map():
+    open_map()
+    for _ in range(61):
+        scroll_down()
+    for _ in range(19):
+        scroll_up()
+    open_map()
 
 class RoutesRunTab(ttk.Frame):
     def __init__(self, master: tk.Misc):
@@ -129,6 +138,8 @@ class RoutesRunTab(ttk.Frame):
             window_rect=rect,
             resolution=(width, height)
         )
+
+        setup_map()
 
         for name in names:
             route_path = ROUTES_DIR / f"{name}.json"

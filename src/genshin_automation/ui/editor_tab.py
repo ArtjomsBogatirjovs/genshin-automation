@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
+from genshin_automation.actions import TeleportMondstadtWolvendomAction
 from genshin_automation.actions.action_types import ActionType
 from genshin_automation.actions.click_point import ClickPointAction
 from genshin_automation.actions.move import MoveAction
@@ -67,6 +68,11 @@ ACTION_UI_DEFS = {
     ActionType.TELEPORT_MONDSTADT_WINDWAIL: {
         "cls": TeleportMondstadtWindwailAction,
         "label": "Teleport to Mondstadt Windwail Highland Statue",
+        "fields": [],
+    },
+    ActionType.TELEPORT_MONDSTADT_WOLVENDOM: {
+        "cls": TeleportMondstadtWolvendomAction,
+        "label": "Teleport to Mondstadt Wolvendom teleporter",
         "fields": [],
     },
 }
