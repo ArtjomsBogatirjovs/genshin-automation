@@ -109,7 +109,7 @@ ACTION_UI_DEFS = {
     },
     ActionType.TELEPORT_MONDSTADT_WINDRISE: {
         "cls": TeleportMondstadtWindriseAction,
-        "label": "Teleport to Mondstadt Wolvendom waypoint",
+        "label": "Teleport to Mondstadt Windrise waypoint",
         "fields": [],
     },
     ActionType.TELEPORT_LIYUE_HARBOR: {

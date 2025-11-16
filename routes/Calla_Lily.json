@@ -2,7 +2,7 @@
   "name": "Calla_Lily",
   "actions": [
     {
-      "type": "Teleport Mondstadt Wolvendom teleport"
+      "type": "Teleport Mondstadt Wolvendom waypoint"
     },
     {
       "type": "Move camera",

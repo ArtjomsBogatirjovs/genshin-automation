@@ -36,11 +36,6 @@ class Action(ABC):
 
 class BaseTeleportAction(Action, ABC):
 
-    @staticmethod
-    @abstractmethod
-    def type_name() -> str:
-        ...
-
     def to_dict(self) -> Dict[str, Any]:
         return {"type": self.type_name()}
 

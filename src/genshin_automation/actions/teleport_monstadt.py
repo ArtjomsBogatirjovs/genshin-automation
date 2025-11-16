@@ -20,7 +20,7 @@ class BaseTeleportMondstadtAction(BaseTeleportAction, ABC):
         click_percent(ctx.window_rect, 0.94, 0.94)
         sleep(1)
 
-        click_percent(ctx.window_rect, 0.78, 0.2)
+        click_percent(ctx.window_rect, 0.78, 0.15)
         sleep(1)
 
         self.after_focus_on_mondstadt(ctx)

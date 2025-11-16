@@ -2,7 +2,7 @@
   "name": "Expedition_repeat_liyue",
   "actions": [
     {
-      "type": "Teleport Liyue Harbor teleport"
+      "type": "Teleport Liyue Harbor waypoint"
     },
     {
       "type": "Move",
