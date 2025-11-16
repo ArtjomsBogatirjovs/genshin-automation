@@ -1,13 +1,15 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
+from genshin_automation.config import AFTER_ROUTE_PAUSE
 from genshin_automation.core.context import RunContext
-from genshin_automation.core.input_controller import open_map, scroll_up, scroll_down
+from genshin_automation.core.input_controller import open_map, scroll_up, scroll_down, sleep
 from genshin_automation.core.paths import ROUTES_DIR
 from genshin_automation.core.route import load_route
 from genshin_automation.core.window import GameWindow
 
 map_adjusted = False
+
 
 def setup_map():
     global map_adjusted
@@ -20,6 +22,7 @@ def setup_map():
         scroll_up()
     open_map()
     map_adjusted = True
+
 
 class RoutesRunTab(ttk.Frame):
     def __init__(self, master: tk.Misc):
@@ -159,6 +162,7 @@ class RoutesRunTab(ttk.Frame):
 
             try:
                 route.run(ctx)
+                sleep(AFTER_ROUTE_PAUSE)
             except Exception as e:
                 messagebox.showerror(
                     "Execution error",

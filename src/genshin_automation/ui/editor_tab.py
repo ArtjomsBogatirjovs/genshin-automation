@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-from genshin_automation.actions import TeleportMondstadtWolvendomAction, TeleportLiyueHarborAction, WaitAction
+from genshin_automation.actions import TeleportMondstadtWolvendomAction, TeleportLiyueHarborAction, WaitAction, \
+    TeleportAvidyaForestUpAction
 from genshin_automation.actions.action_types import ActionType
 from genshin_automation.actions.click_point import ClickPointAction
 from genshin_automation.actions.move import MoveAction, RunAction
@@ -115,6 +116,11 @@ ACTION_UI_DEFS = {
     ActionType.TELEPORT_LIYUE_HARBOR: {
         "cls": TeleportLiyueHarborAction,
         "label": "Teleport to Liyue Harbor waypoint",
+        "fields": [],
+    },
+    ActionType.TELEPORT_AVIDYA_FOREST_UP: {
+        "cls": TeleportAvidyaForestUpAction,
+        "label": "Teleport to Avidya forest upper waypoint",
         "fields": [],
     },
 }

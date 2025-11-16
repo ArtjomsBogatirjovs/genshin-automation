@@ -16,8 +16,18 @@
     },
     {
       "type": "Move camera",
-      "direction": "right",
+      "direction": "left",
       "iterations": 2
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 10.0
+    },
+    {
+      "type": "Move camera",
+      "direction": "right",
+      "iterations": 3
     },
     {
       "type": "Move",
@@ -25,40 +35,8 @@
       "duration_s": 3.0
     },
     {
-      "type": "Move camera",
-      "direction": "left",
-      "iterations": 4
-    },
-    {
-      "type": "Move",
-      "direction": "forward",
-      "duration_s": 9.0
-    },
-    {
-      "type": "Press",
-      "key": "f"
-    },
-    {
-      "type": "Move",
-      "direction": "left",
-      "duration_s": 1.5
-    },
-    {
-      "type": "Move",
-      "direction": "backward",
-      "duration_s": 0.5
-    },
-    {
-      "type": "Press",
-      "key": "f"
-    },
-    {
-      "type": "Press",
-      "key": "f"
-    },
-    {
-      "type": "Press",
-      "key": "f"
+      "type": "Wait",
+      "duration_s": 2.0
     }
   ]
 }

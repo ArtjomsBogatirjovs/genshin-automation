@@ -18,8 +18,11 @@ __all__ = [
     "TeleportMondstadtWolvendomAction",
     "TeleportLiyueHarborAction",
     "TeleportMondstadtWindriseAction",
+    "TeleportAvidyaForestUpAction",
     "MoveCameraAction",
     "WaitAction",
 ]
+
+from .teleport_sumeru import TeleportAvidyaForestUpAction
 
 from .wait import WaitAction

@@ -8,10 +8,10 @@ from genshin_automation.core.context import RunContext
 from genshin_automation.core.input_controller import open_map, click_percent, sleep, click_to_teleport_button
 
 
-class BaseTeleportLiyueAction(BaseTeleportAction, ABC):
+class BaseTeleportSumeruAction(BaseTeleportAction, ABC):
 
     @abstractmethod
-    def after_focus_on_liyue(self, ctx: RunContext) -> None:
+    def after_focus_on_sumeru(self, ctx: RunContext) -> None:
         ...
 
     def run(self, ctx: RunContext) -> None:
@@ -20,10 +20,10 @@ class BaseTeleportLiyueAction(BaseTeleportAction, ABC):
         click_percent(ctx.window_rect, 0.94, 0.94)
         sleep(1)
 
-        click_percent(ctx.window_rect, 0.9, 0.1578)
+        click_percent(ctx.window_rect, 0.9, 0.255)
         sleep(1)
 
-        self.after_focus_on_liyue(ctx)
+        self.after_focus_on_sumeru(ctx)
         sleep(1)
 
         click_to_teleport_button(ctx.window_rect)
@@ -32,13 +32,11 @@ class BaseTeleportLiyueAction(BaseTeleportAction, ABC):
 
 @register_action
 @dataclass
-class TeleportLiyueHarborAction(BaseTeleportLiyueAction):
+class TeleportAvidyaForestUpAction(BaseTeleportSumeruAction):
 
     @staticmethod
     def type_name() -> str:
-        return ActionType.TELEPORT_LIYUE_HARBOR
+        return ActionType.TELEPORT_AVIDYA_FOREST_UP
 
-    def after_focus_on_liyue(self, ctx: RunContext) -> None:
-        click_percent(ctx.window_rect, 0.5, 0.5)
-        sleep(1)
-        click_percent(ctx.window_rect, 0.695, 0.68)
+    def after_focus_on_sumeru(self, ctx: RunContext) -> None:
+        click_percent(ctx.window_rect, 0.5469, 0.59)
