@@ -142,6 +142,38 @@
     {
       "type": "Press",
       "key": "f"
+    },
+    {
+      "type": "Move camera",
+      "direction": "right",
+      "iterations": 11
+    },
+    {
+      "type": "Run",
+      "direction": "forward",
+      "duration_s": 16.5
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 0.3
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 1.0
+    },
+    {
+      "type": "Press",
+      "key": "f"
     }
   ]
 }
