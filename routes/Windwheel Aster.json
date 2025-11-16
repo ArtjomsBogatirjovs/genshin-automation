@@ -93,6 +93,55 @@
     {
       "type": "Press",
       "key": "f"
+    },
+    {
+      "type": "Teleport Mondstadt Windrise statue"
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 1.0
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 1.5
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 1.4
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 1.3
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 3.5
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 0.3
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Press",
+      "key": "f"
     }
   ]
 }

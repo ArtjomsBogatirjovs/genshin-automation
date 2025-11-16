@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import Dict, Any
 
-from genshin_automation.actions.base import Action, register_action
 from genshin_automation.actions.action_types import ActionType
+from genshin_automation.actions.base import Action, register_action
 from genshin_automation.core.context import RunContext
 from genshin_automation.core.input_controller import sleep
 

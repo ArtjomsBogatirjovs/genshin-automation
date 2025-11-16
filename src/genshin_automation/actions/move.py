@@ -45,3 +45,38 @@ class MoveAction(Action):
             direction=str(data["direction"]),
             duration_s=float(data["duration_s"]),
         )
+
+
+@register_action
+@dataclass
+class RunAction(Action):
+    direction: str
+    duration_s: float
+
+    @staticmethod
+    def type_name() -> str:
+        return ActionType.RUN
+
+    def run(self, ctx: RunContext) -> None:
+        key = DIRECTION_TO_KEY.get(self.direction, "w")
+        key_down(key)
+        key_down("shift")
+        try:
+            sleep(self.duration_s)
+        finally:
+            key_up("shift")
+            key_up(key)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "type": self.type_name(),
+            "direction": self.direction,
+            "duration_s": self.duration_s,
+        }
+
+    @staticmethod
+    def from_dict(data: Dict[str, Any]) -> "RunAction":
+        return RunAction(
+            direction=str(data["direction"]),
+            duration_s=float(data["duration_s"]),
+        )

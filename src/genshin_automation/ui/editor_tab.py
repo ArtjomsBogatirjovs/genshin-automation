@@ -4,10 +4,11 @@ from tkinter import ttk, messagebox
 from genshin_automation.actions import TeleportMondstadtWolvendomAction, TeleportLiyueHarborAction, WaitAction
 from genshin_automation.actions.action_types import ActionType
 from genshin_automation.actions.click_point import ClickPointAction
-from genshin_automation.actions.move import MoveAction
+from genshin_automation.actions.move import MoveAction, RunAction
 from genshin_automation.actions.move_camera import MoveCameraAction
 from genshin_automation.actions.press_key import PressKeyAction
-from genshin_automation.actions.teleport_monstadt import TeleportMondstadtWindwailAction
+from genshin_automation.actions.teleport_monstadt import TeleportMondstadtWindwailAction, \
+    TeleportMondstadtWindriseAction
 from genshin_automation.core.paths import ROUTES_DIR
 from genshin_automation.core.route import Route, save_route, load_route
 
@@ -30,6 +31,25 @@ ACTION_UI_DEFS = {
     ActionType.MOVE: {
         "cls": MoveAction,
         "label": "Move in direction for seconds",
+        "fields": [
+            {
+                "name": "direction",
+                "label": "Direction",
+                "type": "choice",
+                "choices": ["forward", "backward", "left", "right"],
+                "default": "forward",
+            },
+            {
+                "name": "duration_s",
+                "label": "Duration (s)",
+                "type": "float",
+                "default": "1.0",
+            },
+        ],
+    },
+    ActionType.RUN: {
+        "cls": RunAction,
+        "label": "Run in direction for seconds",
         "fields": [
             {
                 "name": "direction",
@@ -84,6 +104,11 @@ ACTION_UI_DEFS = {
     },
     ActionType.TELEPORT_MONDSTADT_WOLVENDOM: {
         "cls": TeleportMondstadtWolvendomAction,
+        "label": "Teleport to Mondstadt Wolvendom waypoint",
+        "fields": [],
+    },
+    ActionType.TELEPORT_MONDSTADT_WINDRISE: {
+        "cls": TeleportMondstadtWindriseAction,
         "label": "Teleport to Mondstadt Wolvendom waypoint",
         "fields": [],
     },

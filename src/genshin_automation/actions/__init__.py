@@ -1,10 +1,11 @@
 from .base import Action, ACTION_REGISTRY
 from .click_point import ClickPointAction
-from .move import MoveAction
+from .move import MoveAction, RunAction
 from .move_camera import MoveCameraAction
 from .press_key import PressKeyAction
 from .teleport_liyue import TeleportLiyueHarborAction
-from .teleport_monstadt import TeleportMondstadtWindwailAction, TeleportMondstadtWolvendomAction
+from .teleport_monstadt import TeleportMondstadtWindwailAction, TeleportMondstadtWolvendomAction, \
+    TeleportMondstadtWindriseAction
 
 __all__ = [
     "Action",
@@ -12,9 +13,11 @@ __all__ = [
     "ClickPointAction",
     "PressKeyAction",
     "MoveAction",
+    "RunAction",
     "TeleportMondstadtWindwailAction",
     "TeleportMondstadtWolvendomAction",
     "TeleportLiyueHarborAction",
+    "TeleportMondstadtWindriseAction",
     "MoveCameraAction",
     "WaitAction",
 ]

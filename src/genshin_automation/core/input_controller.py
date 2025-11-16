@@ -25,22 +25,34 @@ def sleep(seconds: float) -> None:
     time.sleep(seconds)
 
 
+def hold_right_click() -> None:
+    pydirectinput.mouseDown(button="right")
+
+
+def up_right_click() -> None:
+    pydirectinput.mouseUp(button="right")
+
+
 def click_percent(rect: Tuple[int, int, int, int], x_frac: float, y_frac: float) -> None:
     x, y = get_x_y(rect, x_frac, y_frac)
     click(x, y)
 
+
 def move_mouse_to_cord(x: int, y: int) -> None:
     pydirectinput.moveTo(x, y)
+
 
 def move_mouse_to(rect: Tuple[int, int, int, int], x_frac: float, y_frac: float) -> None:
     x, y = get_x_y(rect, x_frac, y_frac)
     move_mouse_to_cord(x, y)
+
 
 def get_x_y(rect: Tuple[int, int, int, int], x_frac: float, y_frac: float) -> Tuple[int, int]:
     left, top, width, height = rect
     x = int(left + x_frac * width)
     y = int(top + y_frac * height)
     return x, y
+
 
 def scroll_down() -> None:
     scroll(-1)

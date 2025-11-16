@@ -33,6 +33,7 @@ class Action(ABC):
     def from_dict(data: Dict[str, Any]) -> "Action":
         ...
 
+
 class BaseTeleportAction(Action, ABC):
 
     @staticmethod
