@@ -9,7 +9,7 @@ from genshin_automation.actions.move import MoveAction, RunAction
 from genshin_automation.actions.move_camera import MoveCameraAction
 from genshin_automation.actions.press_key import PressKeyAction
 from genshin_automation.actions.teleport_monstadt import TeleportMondstadtWindwailAction, \
-    TeleportMondstadtWindriseAction
+    TeleportMondstadtWindriseAction, TeleportMondstadtStormterrorLeft
 from genshin_automation.core.paths import ROUTES_DIR
 from genshin_automation.core.route import Route, save_route, load_route
 
@@ -121,6 +121,11 @@ ACTION_UI_DEFS = {
     ActionType.TELEPORT_AVIDYA_FOREST_UP: {
         "cls": TeleportAvidyaForestUpAction,
         "label": "Teleport to Avidya forest upper waypoint",
+        "fields": [],
+    },
+    ActionType.TELEPORT_MONDSTADT_STORM_TERROR_LAIR_LEFT: {
+        "cls": TeleportMondstadtStormterrorLeft,
+        "label": "Teleport to Mondstadt Stormterror's Lair left waypoint",
         "fields": [],
     },
 }

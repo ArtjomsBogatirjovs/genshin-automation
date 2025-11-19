@@ -6,8 +6,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Dict, Any, Type
 
-from genshin_automation.actions.base import Action, ACTION_REGISTRY
+from genshin_automation.actions.base import Action, ACTION_REGISTRY, BaseTeleportAction
+from genshin_automation.config import AFTER_FIRST_TELEPORT_PAUSE
 from genshin_automation.core.context import RunContext
+from genshin_automation.core.input_controller import sleep
 
 
 @dataclass
@@ -16,8 +18,13 @@ class Route:
     actions: List[Action] = field(default_factory=list)
 
     def run(self, ctx: RunContext) -> None:
+        first_teleport = True
         for action in self.actions:
             action.run(ctx)
+            if first_teleport and isinstance(action, BaseTeleportAction):
+                first_teleport = False
+                sleep(AFTER_FIRST_TELEPORT_PAUSE)
+
 
     def to_dict(self) -> Dict[str, Any]:
         return {

@@ -5,7 +5,7 @@ from .move_camera import MoveCameraAction
 from .press_key import PressKeyAction
 from .teleport_liyue import TeleportLiyueHarborAction
 from .teleport_monstadt import TeleportMondstadtWindwailAction, TeleportMondstadtWolvendomAction, \
-    TeleportMondstadtWindriseAction
+    TeleportMondstadtWindriseAction, TeleportMondstadtStormterrorLeft
 
 __all__ = [
     "Action",
@@ -21,6 +21,7 @@ __all__ = [
     "TeleportAvidyaForestUpAction",
     "MoveCameraAction",
     "WaitAction",
+    "TeleportMondstadtStormterrorLeft",
 ]
 
 from .teleport_sumeru import TeleportAvidyaForestUpAction

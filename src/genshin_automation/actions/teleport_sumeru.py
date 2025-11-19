@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from genshin_automation.actions.action_types import ActionType
 from genshin_automation.actions.base import BaseTeleportAction, register_action
-from genshin_automation.config import AFTER_TELEPORT_PAUSE
+from genshin_automation.config import AFTER_TELEPORT_PAUSE, BETWEEN_CLICK_PAUSE
 from genshin_automation.core.context import RunContext
 from genshin_automation.core.input_controller import open_map, click_percent, sleep, click_to_teleport_button
 
@@ -18,13 +18,13 @@ class BaseTeleportSumeruAction(BaseTeleportAction, ABC):
         open_map()
 
         click_percent(ctx.window_rect, 0.94, 0.94)
-        sleep(1)
+        sleep(BETWEEN_CLICK_PAUSE)
 
         click_percent(ctx.window_rect, 0.9, 0.255)
-        sleep(1)
+        sleep(BETWEEN_CLICK_PAUSE)
 
         self.after_focus_on_sumeru(ctx)
-        sleep(1)
+        sleep(BETWEEN_CLICK_PAUSE)
 
         click_to_teleport_button(ctx.window_rect)
         sleep(AFTER_TELEPORT_PAUSE)

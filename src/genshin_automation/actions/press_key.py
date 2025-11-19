@@ -5,7 +5,7 @@ from genshin_automation.actions.action_types import ActionType
 from genshin_automation.actions.base import Action, register_action
 from genshin_automation.config import WITHOUT_F_PRESSING
 from genshin_automation.core.context import RunContext
-from genshin_automation.core.input_controller import key_press
+from genshin_automation.core.input_controller import key_press, sleep
 
 
 @register_action
@@ -19,6 +19,7 @@ class PressKeyAction(Action):
 
     def run(self, ctx: RunContext) -> None:
         if WITHOUT_F_PRESSING and self.key == "f":
+            sleep(0.1)
             return
         key_press(self.key)
 

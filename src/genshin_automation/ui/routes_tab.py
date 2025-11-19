@@ -149,7 +149,7 @@ class RoutesRunTab(ttk.Frame):
 
         setup_map()
 
-        for name in names:
+        for i, name in enumerate(names):
             route_path = ROUTES_DIR / f"{name}.json"
             try:
                 route = load_route(route_path)
@@ -162,7 +162,8 @@ class RoutesRunTab(ttk.Frame):
 
             try:
                 route.run(ctx)
-                sleep(AFTER_ROUTE_PAUSE)
+                if i < len(names) - 1:
+                    sleep(AFTER_ROUTE_PAUSE)
             except Exception as e:
                 messagebox.showerror(
                     "Execution error",
