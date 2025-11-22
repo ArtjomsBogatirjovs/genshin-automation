@@ -40,5 +40,5 @@ class TeleportLiyueHarborAction(BaseTeleportLiyueAction):
 
     def after_focus_on_liyue(self, ctx: RunContext) -> None:
         click_percent(ctx.window_rect, 0.5, 0.5)
-        sleep(BETWEEN_CLICK_PAUSE)
+        sleep(BETWEEN_CLICK_PAUSE * 2)
         click_percent(ctx.window_rect, 0.695, 0.68)
