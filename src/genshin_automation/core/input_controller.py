@@ -1,3 +1,4 @@
+import string
 import time
 from typing import Tuple
 
@@ -73,6 +74,18 @@ def click_to_teleport_button(rect: Tuple[int, int, int, int]) -> None:
 def open_map() -> None:
     key_press("m")
     sleep(1.0)
+
+
+def type_text(text: str) -> None:
+    if not text:
+        return
+    for ch in text:
+        if ch in string.ascii_uppercase:
+            pydirectinput.keyDown("shift")
+            pydirectinput.press(ch.lower())
+            pydirectinput.keyUp("shift")
+        else:
+            pydirectinput.press(ch)
 
 
 def move_camera_horizontal(

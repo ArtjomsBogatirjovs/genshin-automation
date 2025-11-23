@@ -10,3 +10,4 @@
 .venv
 /src/genshin_automation.egg-info/
 /.idea/
+promo_codes_activated.txt

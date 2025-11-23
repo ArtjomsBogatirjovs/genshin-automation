@@ -5,6 +5,7 @@ class ActionType:
     RUN = "Run"
     MOVE_CAMERA = "Move camera"
     WAIT = "Wait"
+    PROMO_CODES = "PromoCodes"
     TELEPORT_MONDSTADT_WINDWAIL = "Teleport Mondstadt Windwail statue"
     TELEPORT_MONDSTADT_WOLVENDOM = "Teleport Mondstadt Wolvendom waypoint"
     TELEPORT_MONDSTADT_WINDRISE = "Teleport Mondstadt Windrise statue"

@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 from genshin_automation.config import AFTER_ROUTE_PAUSE
+from genshin_automation.core import builtin_routes
 from genshin_automation.core.context import RunContext
 from genshin_automation.core.input_controller import open_map, scroll_up, scroll_down, sleep
 from genshin_automation.core.paths import ROUTES_DIR
@@ -107,12 +108,13 @@ class RoutesRunTab(ttk.Frame):
         ROUTES_DIR.mkdir(parents=True, exist_ok=True)
         for path in sorted(ROUTES_DIR.glob("*.json")):
             self.routes_list.insert(tk.END, path.stem)
+        for display_name in builtin_routes.list_display_names():
+            self.routes_list.insert(tk.END, display_name)
 
     def refresh_windows(self):
         titles = GameWindow.list_candidate_titles()
         self.window_combo["values"] = titles
         if titles:
-            # keep selection if still present, otherwise select first
             current = self.window_title_var.get()
             if current not in titles:
                 self.window_title_var.set(titles[0])
@@ -150,15 +152,19 @@ class RoutesRunTab(ttk.Frame):
         setup_map()
 
         for i, name in enumerate(names):
-            route_path = ROUTES_DIR / f"{name}.json"
-            try:
-                route = load_route(route_path)
-            except Exception as e:
-                messagebox.showerror(
-                    "Load error",
-                    f"Failed to load route '{name}':\n{e}",
-                )
-                return
+            builtin_def = builtin_routes.find_by_display_name(name)
+            if builtin_def is not None:
+                route = builtin_def.factory()
+            else:
+                route_path = ROUTES_DIR / f"{name}.json"
+                try:
+                    route = load_route(route_path)
+                except Exception as e:
+                    messagebox.showerror(
+                        "Load error",
+                        f"Failed to load route '{name}':\n{e}",
+                    )
+                    return
 
             try:
                 route.run(ctx)
