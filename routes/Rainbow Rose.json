@@ -1,0 +1,206 @@
+{
+  "name": "Rainbow Rose",
+  "actions": [
+    {
+      "type": "Teleport Court of Fontaine mid waypoint"
+    },
+    {
+      "type": "Run",
+      "direction": "backward",
+      "duration_s": 7.0
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 0.1
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Move",
+      "direction": "backward",
+      "duration_s": 1.3
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 1.0
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Run",
+      "direction": "right",
+      "duration_s": 4.9
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 0.1
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 0.1
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Move",
+      "direction": "backward",
+      "duration_s": 0.9
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 0.7
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 0.55
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Run",
+      "direction": "forward",
+      "duration_s": 5.0
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 2.75
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 5.2
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Move",
+      "direction": "backward",
+      "duration_s": 0.5
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 0.5
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 2.7
+    },
+    {
+      "type": "Move",
+      "direction": "backward",
+      "duration_s": 0.1
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Teleport Court of Fontaine mid waypoint"
+    },
+    {
+      "type": "Run",
+      "direction": "backward",
+      "duration_s": 15.0
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 9.8
+    },
+    {
+      "type": "Run",
+      "direction": "forward",
+      "duration_s": 6.7
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 0.1
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Teleport Court of Fontaine mid waypoint"
+    },
+    {
+      "type": "Run",
+      "direction": "backward",
+      "duration_s": 7.7
+    },
+    {
+      "type": "Move",
+      "direction": "right",
+      "duration_s": 6.8
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 0.2
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    },
+    {
+      "type": "Run",
+      "direction": "right",
+      "duration_s": 6.1
+    },
+    {
+      "type": "Run",
+      "direction": "forward",
+      "duration_s": 5.2
+    },
+    {
+      "type": "Move",
+      "direction": "forward",
+      "duration_s": 0.1
+    },
+    {
+      "type": "Move",
+      "direction": "left",
+      "duration_s": 0.3
+    },
+    {
+      "type": "Press",
+      "key": "f"
+    }
+  ]
+}
