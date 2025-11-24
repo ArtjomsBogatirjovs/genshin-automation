@@ -7,6 +7,7 @@ class ActionType:
     WAIT = "Wait"
     PROMO_CODES = "PromoCodes"
     TELEPORT_MONDSTADT_WINDWAIL = "Teleport Mondstadt Windwail statue"
+    TELEPORT_COURT_FONTAINE_MID = "Teleport Court of Fontaine mid waypoint"
     TELEPORT_MONDSTADT_WOLVENDOM = "Teleport Mondstadt Wolvendom waypoint"
     TELEPORT_MONDSTADT_WINDRISE = "Teleport Mondstadt Windrise statue"
     TELEPORT_MONDSTADT_STORM_TERROR_LAIR_LEFT = "Teleport Mondstadt Stormterror's Lair left waypoint"

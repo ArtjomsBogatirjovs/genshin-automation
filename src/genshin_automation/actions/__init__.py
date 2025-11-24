@@ -4,6 +4,7 @@ from .move import MoveAction, RunAction
 from .move_camera import MoveCameraAction
 from .press_key import PressKeyAction
 from .promo_codes import PromoCodesAction
+from .teleport_fontaine import TeleportCourtFountainMidAction
 from .teleport_liyue import TeleportLiyueHarborAction
 from .teleport_monstadt import TeleportMondstadtWindwailAction, TeleportMondstadtWolvendomAction, \
     TeleportMondstadtWindriseAction, TeleportMondstadtStormterrorLeft
@@ -23,6 +24,7 @@ __all__ = [
     "MoveCameraAction",
     "WaitAction",
     "TeleportMondstadtStormterrorLeft",
+    "TeleportCourtFountainMidAction",
     "PromoCodesAction",
 ]
 

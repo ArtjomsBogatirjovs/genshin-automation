@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 from genshin_automation.actions import TeleportMondstadtWolvendomAction, TeleportLiyueHarborAction, WaitAction, \
-    TeleportAvidyaForestUpAction
+    TeleportAvidyaForestUpAction, TeleportCourtFountainMidAction
 from genshin_automation.actions.action_types import ActionType
 from genshin_automation.actions.click_point import ClickPointAction
 from genshin_automation.actions.move import MoveAction, RunAction
@@ -126,6 +126,11 @@ ACTION_UI_DEFS = {
     ActionType.TELEPORT_MONDSTADT_STORM_TERROR_LAIR_LEFT: {
         "cls": TeleportMondstadtStormterrorLeft,
         "label": "Teleport to Mondstadt Stormterror's Lair left waypoint",
+        "fields": [],
+    },
+    ActionType.TELEPORT_COURT_FONTAINE_MID: {
+        "cls": TeleportCourtFountainMidAction,
+        "label": "Teleport to Court of Fontaine mid waypoint",
         "fields": [],
     },
 }
