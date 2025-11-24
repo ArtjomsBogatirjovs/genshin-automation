@@ -19,8 +19,7 @@ class PressKeyAction(Action):
 
     def run(self, ctx: RunContext) -> None:
         if WITHOUT_F_PRESSING and self.key == "f":
-            sleep(0.1)
-            return
+            key_press("t")
         key_press(self.key)
 
     def to_dict(self) -> Dict[str, Any]:
