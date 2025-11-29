@@ -42,7 +42,7 @@
     {
       "type": "Move",
       "direction": "forward",
-      "duration_s": 1.6
+      "duration_s": 1.7
     },
     {
       "type": "Press",
